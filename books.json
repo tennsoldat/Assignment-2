@@ -610,7 +610,7 @@
     },
     {
         "ID": "B88",
-        "Title": "Freedom at Midnight",
+        "Title": "Not",
         "Genre": "nonfiction",
         "Author": "Lapierre, Dominique",
         "Price": 167.0
@@ -631,10 +631,10 @@
     },
     {
         "ID": "B91",
-        "Title": "Free Will",
+        "Title": "Not",
         "Genre": "nonfiction",
         "Author": "Harris, Sam",
-        "Price": 203.0
+        "Price": "200000"
     },
     {
         "ID": "B92",
@@ -1475,5 +1475,19 @@
         "Genre": "fiction",
         "Author": "Dickens, Charles",
         "Price": 196.0
+    },
+    {
+        "ID": "",
+        "Title": "",
+        "Genre": "",
+        "Author": "",
+        "Price": ""
+    },
+    {
+        "ID": "b80000",
+        "Title": "People are lonely",
+        "Genre": "drama",
+        "Author": "Me",
+        "Price": "10000003"
     }
 ]

@@ -124,6 +124,7 @@ class Gui:
         self.window.geometry("500x400")
 
         self.update_combo = ttk.Combobox(self.window, values=["Title", "Genre", "Author", "Price"])
+        self.update_combo.set("Title")
         self.update_combo.pack()
 
         label_update = tk.Label(self.window, text="Update")
@@ -178,7 +179,7 @@ class Json:
     def search(self, category, query):
         result = []
         for book in self.books:
-          if query.lower() in str(book[category]):
+          if query.lower() in str(book[category]).lower():
               result.append(book)
         return result
 
