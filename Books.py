@@ -10,6 +10,7 @@ Original file is located at
 import json
 import tkinter as tk
 from tkinter import ttk
+from tkinter import messagebox
 
 class Book:
     def __init__(self,id,title,genre,author,price):
@@ -41,7 +42,17 @@ class Gui:
         root.geometry("500x400")
 
         self.combo = ttk.Combobox(root, values=["Title", "Genre", "Author", "Price"])
+        self.combo.set("Title")
         self.combo.pack()
+
+        label_search = tk.Label(root, text="Search")
+        label_search.pack()
+
+        self.entry_search = tk.Entry(root)
+        self.entry_search.pack()
+
+        srchBtn = tk.Button(root, text="Search", command=self.submit)
+        srchBtn.pack()
 
         addBtn = tk.Button(root, text="Add",command=self.add_window)
         addBtn.pack()
@@ -49,17 +60,8 @@ class Gui:
         upBtn = tk.Button(root, text="Update",command=self.update_window)
         upBtn.pack()
 
-        srchBtn = tk.Button(root, text="Search", command=self.submit)
-        srchBtn.pack()
-
         delBtn = tk.Button(root, text="Delete", command=self.delete)
         delBtn.pack()
-
-        label_search = tk.Label(root, text="Search")
-        label_search.pack()
-
-        self.entry_search = tk.Entry(root)
-        self.entry_search.pack()
 
         self.listbox = tk.Listbox(root, width=50)
         self.listbox.pack()
@@ -73,7 +75,7 @@ class Gui:
 
         self.listbox.delete(0, tk.END)
         for book in SrchRe:
-            self.listbox.insert(tk.END, f"{book['ID']} | {book['Title']} | {book['Author']}")
+            self.listbox.insert(tk.END, f"{book['ID']} | {book['Title']}| {book['Genre']} | {book['Author']} | {book['Price']}")
 
     def add_window(self):
         self.window = tk.Toplevel()
@@ -140,7 +142,16 @@ class Gui:
 
       book_id = selected.split(" | ")[0]
       cat = self.update_combo.get()
+
       new_value = self.entry_update.get()
+      if new_value == "":
+          messagebox.showerror("fel", "Tomt fält")
+          return
+
+      if cat == "Price":
+          if not new_value.isdigit():
+              messagebox.showerror("Fel", "Price måste vara ett tal!")
+              return
 
       self.json.update(book_id, cat, new_value)
 
@@ -182,7 +193,7 @@ class Json:
         json.dump(self.books,f, indent=4)
 
 
-    def update(self, book_id, category,input_value):
+    def update(self, book_id, category, input_value):
         for book in self.books:
               if book["ID"] == book_id:
                   book[category] = input_value
