@@ -38,7 +38,7 @@ class Gui:
 
         root = tk.Tk()
         root.title("Books")
-        root.geometry("300x200")
+        root.geometry("500x400")
 
         self.combo = ttk.Combobox(root, values=["Title", "Genre", "Author", "Price"])
         self.combo.pack()
@@ -78,7 +78,7 @@ class Gui:
     def add_window(self):
         self.window = tk.Toplevel()
         self.window.title("Add Book")
-        self.window.geometry("300x200")
+        self.window.geometry("500x400")
 
         idLabel = tk.Label(self.window, text="ID")
         idLabel.pack()
@@ -119,13 +119,13 @@ class Gui:
         self.window = tk.Toplevel()
         self.window.title("Update Book")
 
-        self.window.geometry("300x200")
+        self.window.geometry("500x400")
 
         self.update_combo = ttk.Combobox(self.window, values=["Title", "Genre", "Author", "Price"])
-        self.combo.pack()
+        self.update_combo.pack()
 
         label_update = tk.Label(self.window, text="Update")
-        label_update.get()
+        label_update.pack()
 
         self.entry_update = tk.Entry(self.window)
         self.entry_update.pack()
@@ -135,8 +135,11 @@ class Gui:
 
     def update_submit(self):
       selected = self.listbox.get(tk.ACTIVE)
+      if not selected:
+         return
+
       book_id = selected.split(" | ")[0]
-      cat = self.combo.get()
+      cat = self.update_combo.get()
       new_value = self.entry_update.get()
 
       self.json.update(book_id, cat, new_value)
@@ -146,6 +149,9 @@ class Gui:
 
     def delete(self):
       selected = self.listbox.get(tk.ACTIVE)
+      if not selected:
+         return
+
       book_id = selected.split(" | ")[0]
 
       self.json.delete(book_id)
@@ -161,7 +167,7 @@ class Json:
     def search(self, category, query):
         result = []
         for book in self.books:
-          if query in str(book[category]):
+          if query.lower() in str(book[category]):
               result.append(book)
         return result
 
